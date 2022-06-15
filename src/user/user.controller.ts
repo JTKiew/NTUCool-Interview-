@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { createUserDto, editUserDto, queryUserDto } from 'src/dto';
 import { UserService } from './user.service';
  
@@ -10,7 +10,7 @@ export class UserController {
 
     // create new user
     // url: localhost:3000/user/create
-    // submited name and email carry by HTML Req Body
+    // submited name and email carry by HTTP Req Body
     // BearerAuthToken should added in Header.Authorization 
     @ApiBearerAuth()
     @Post('create')
@@ -38,7 +38,7 @@ export class UserController {
     // edit user name and email by id
     // url: localhost:3000/user/edit/:id
     // :id must replace by the id of target user 
-    // edit data (name / email) carry by HTML Req Body
+    // edit data (name / email) carry by HTTP Req Body
     // content in name or email can be blank => no changes
     // BearerAuthToken should added in Header.Authorization 
     @ApiBearerAuth()

@@ -1,7 +1,7 @@
 # NTUCool-Interview
 
 ## Preparation and Installation
-- install nest.js using `npm install -g @nestjs/cli`
+- install nest.js cli using `npm install -g @nestjs/cli`
 - install the required modules through `npm install`
 - run the Web API with `npm run start`
 - test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
@@ -30,6 +30,9 @@
 - used to validate BearerAuthToken 
 
 ## Restful API
+- Following are documents of input and response of APIs
+- go to `localhost:3000/api` for more visualized API provided by Swagger
+- to test enrollment API, please use .../enrollment/add to create enrollment entry first
 ### User
 ```mermaid
 graph LR
@@ -149,7 +152,7 @@ graph LR
     O(/queryCourse) --> P{EnrollmentController}
     
     K(/add) --> Z{Middleware}
-    L(delete/:id) --> Z{Middleware}
+    L(/delete/:id) --> Z{Middleware}
     
     Z{Middleware} --> P{EnrollmentController}
     P{EnrollmentController} --> R{EnrollmentService}
@@ -275,7 +278,7 @@ graph LR
     - `throw new BadRequestException({ErrMsg});`
 
 - Bearer Auth token Header, token = 'cool'
-    - carry Bearer auth token in the header of html request 
+    - carry Bearer auth token in the header of http request 
     - In Header: {Athorization: Bearer cool}
     - extract auth token by 
         - `BearerToken = req.headers['authorization'].split(' ');`
@@ -283,3 +286,6 @@ graph LR
 
 - return Unauthorized
     -  `throw new UnauthorizedException();`
+
+- Middleware for Bearer Auth token validation
+- Swagger for visualized API table

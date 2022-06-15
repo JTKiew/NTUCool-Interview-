@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { addEnrollmentDto, queryEnrollCourseDto, queryEnrollmentDto, queryEnrollUserDto} from 'src/dto';
 import { EnrollmentService } from './enrollment.service';
@@ -17,7 +17,7 @@ export class EnrollmentController {
 
     // add new enrollment with given userId, courseid and role
     // url: localhost:3000/enrollment/add
-    // submited userId, courseId and role carry by HTML Req Body
+    // submited userId, courseId and role carry by HTTP Req Body
     // BearerAuthToken should added in Header.Authorization 
     @ApiBearerAuth()
     @Post('add')
