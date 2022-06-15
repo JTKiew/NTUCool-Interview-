@@ -30,6 +30,8 @@
 - used to validate BearerAuthToken 
 
 ## Restful API
+- Following are documents of input and response of APIs
+- go to localhost:3000/api for more visualized API provided by Swagger
 ### User
 ```mermaid
 graph LR
