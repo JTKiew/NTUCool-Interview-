@@ -1,30 +1,32 @@
 # NTUCool-Interview
 
 ## Preparation and Installation
+- install nest.js using `npm install -g @nestjs/cli`
 - install the required modules through `npm install`
 - run the Web API with `npm run start`
 - test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
 
 ## Directories & Files
 ### User 
-- contain module related to users
-- dto directory kept format for how the data sent over the network
+- contain module, controller and service related to users
 
 ### Course
-- contain module related to courses
+- contain module, controller and service related to courses
 
 ### Enrollment
-- contain module related to enrollments
-- dto directory kept format for how the data sent over the network
+- contain module, controller and service related to enrollments
 
 ### Database
 - contain the initData for Restful API
 - contain the schema(type) for User, Course and Enrollment
 
-### Utility
-- contain helper functions to assist usage of Restful API
+### Dto
+- dto directory kept format for how the data sent over the network
 
-### logger.middleware
+### Utility
+- contain helper functions to assist response of Restful API
+
+### logger.middleware.ts
 - used to validate BearerAuthToken 
 
 ## Restful API
@@ -38,19 +40,21 @@ graph LR
     B["/user"] --> H(/edit/:id) 
     B["/user"] --> I(/delete/:id) 
 
-    E["/create"]        --> J{UserController}
     F["/get/:id"]       --> J{UserController}
     G["/query"]         --> J{UserController}
-    H["/edit/:id"]      --> J{UserController}
-    I["/delete/:id"]    --> J{UserController}
+    E["/create"]        --> Z{Middleware}
+    H["/edit/:id"]      --> Z{Middleware}
+    I["/delete/:id"]    --> Z{Middleware}
 
+    Z{Middleware} --> J{UserController}
     J{UserController} --> K{UserService}
 
-    K{UserService} --> L("createUser()")
     K{UserService} --> M("getUser()")
     K{UserService} --> N("queryUser()")
+    K{UserService} --> L("createUser()")
     K{UserService} --> O("editUser()")
     K{UserService} --> P("deleteUser()")
+
 ```
 - **".../user/create"**
     - **ReqMethod: POST**
@@ -122,7 +126,7 @@ graph LR
         - In Header: {Authorization: Bearer {token} }
     - **response:**
         -  success
-            -  User with id ${id} deleted!
+            -  User with id {id} deleted!
         -  invalid id
             -  BadRequestException("Invalid id! User not exists!");
         -  invalid token
@@ -140,20 +144,22 @@ graph LR
     C["/enrollment"] --> O(/queryCourse)
 
     J(/queryUser)   --> P{EnrollmentController}
-    K(/add)         --> P{EnrollmentController}
-    L(/delete/:id)  --> P{EnrollmentController}
     M(/get/:id)     --> P{EnrollmentController}
     N(/queryEnroll) --> P{EnrollmentController}
     O(/queryCourse) --> P{EnrollmentController}
-
+    
+    K(/add) --> Z{Middleware}
+    L(delete/:id) --> Z{Middleware}
+    
+    Z{Middleware} --> P{EnrollmentController}
     P{EnrollmentController} --> R{EnrollmentService}
 
     R{EnrollmentService} --> S("queryCourseUser()")
-    R{EnrollmentService} --> T("addEnroll()")
-    R{EnrollmentService} --> U("deleteEnroll()")
     R{EnrollmentService} --> V("getEnroll()")
     R{EnrollmentService} --> W("queryEnroll()")
     R{EnrollmentService} --> X("queryUserCourse()")
+    R{EnrollmentService} --> T("addEnroll()")
+    R{EnrollmentService} --> U("deleteEnroll()")
 ```
 - **".../enrollment/queryUser?courseId={number}"**
     - **ReqMethod: GET**
@@ -257,6 +263,8 @@ graph LR
             - course's data
         - invalid id
             - BadRequestException("Invalid id! Course not exists!");
+
+## 
 
 ## Some Implementations
 - email must match regex \/^\S@\S$\/
