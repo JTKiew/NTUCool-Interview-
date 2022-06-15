@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { createUserDto, editUserDto, queryUserDto } from 'src/dto';
 import { UserService } from './user.service';
  

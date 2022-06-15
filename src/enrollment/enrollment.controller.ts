@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { addEnrollmentDto, queryEnrollCourseDto, queryEnrollmentDto, queryEnrollUserDto} from 'src/dto';
 import { EnrollmentService } from './enrollment.service';
