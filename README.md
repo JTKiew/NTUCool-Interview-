@@ -31,7 +31,7 @@
 
 ## Restful API
 - Following are documents of input and response of APIs
-- go to localhost:3000/api for more visualized API provided by Swagger
+- go to `localhost:3000/api` for more visualized API provided by Swagger
 ### User
 ```mermaid
 graph LR
@@ -285,3 +285,6 @@ graph LR
 
 - return Unauthorized
     -  `throw new UnauthorizedException();`
+
+- Middleware for Bearer Auth token validation
+- Swagger for visualized API table
