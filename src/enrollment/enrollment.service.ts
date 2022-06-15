@@ -2,7 +2,6 @@ import { BadRequestException, Inject, Injectable, UnauthorizedException } from '
 import { AuthService } from 'src/auth/auth.service';
 import { CourseService } from 'src/course/course.service';
 import { Course, Enrollment, Users } from 'src/database';
-import { queryUserDto } from 'src/user/dto';
 import { UserService } from 'src/user/user.service';
 import { enrollSorting } from 'src/Utility/Sorting';
 import { addEnrollmentDto, queryEnrollmentDto } from './dto';
@@ -34,6 +33,9 @@ export class EnrollmentService {
             })            
             // sorting the retVal array with Users.id
             retVal.sort((a,b) => (b.id < a.id ? 1 : b.id > a.id ? -1: 0))
+            // remove dulicate 
+            retVal = retVal.filter((obj,i) => i === retVal.indexOf(obj))
+                
             return retVal
         }
         else
@@ -60,15 +62,17 @@ export class EnrollmentService {
                 obj.role == dto.role) == true){
                     throw new BadRequestException("Enrollment Existed!");
                 }
-            // add new enrollment
-            this.enrollments.push({
-                'id': this.enrollments.length,
-                'userId': Number(dto.userId),
-                'courseId': Number(dto.courseId),
-                'role': dto.role
-            })
-            console.log(this.enrollments);
-            return `New Enrollment added!`;
+            else{
+                  // add new enrollment
+                this.enrollments.push({
+                    'id': this.enrollments.length,
+                    'userId': Number(dto.userId),
+                    'courseId': Number(dto.courseId),
+                    'role': dto.role
+                })
+                console.log(this.enrollments);
+                return `New Enrollment added!`;
+            }
         }
         else
             throw new UnauthorizedException();
@@ -164,6 +168,8 @@ export class EnrollmentService {
             })            
             // sorting the retVal array with Course.id
             retVal.sort((a,b) => (b.id < a.id ? 1 : b.id > a.id ? -1: 0))
+            // remove dulicate 
+            retVal = retVal.filter((obj,i) => i === retVal.indexOf(obj))
             return retVal
         }
         else

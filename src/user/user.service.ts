@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { userData, Users } from 'src/database';
 import { userSorting } from 'src/Utility/Sorting';
@@ -61,7 +61,7 @@ export class UserService {
             else
                 throw new BadRequestException("Invalid name! User not exists!");
         }
-        else{
+        else if (dto.filter === "email"){
             // search user with email: str
             retVal = this.users.find(obj => obj.email === dto.str);
             if (retVal)
@@ -69,6 +69,8 @@ export class UserService {
             else
                 throw new BadRequestException("Invalid email! User not exists!");
         }
+        else    
+            throw new BadRequestException("Invalid filter!");
     }
 
     // edit user's name or email 
