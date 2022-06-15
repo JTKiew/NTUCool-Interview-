@@ -1,9 +1,9 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CourseService } from 'src/course/course.service';
 import { Course, Enrollment, Users } from 'src/database';
+import { addEnrollmentDto, queryEnrollmentDto } from 'src/dto';
 import { UserService } from 'src/user/user.service';
 import { enrollSorting } from 'src/Utility/Sorting';
-import { addEnrollmentDto, queryEnrollmentDto } from './dto';
 
 @Injectable()
 export class EnrollmentService {
@@ -40,7 +40,7 @@ export class EnrollmentService {
     }
 
     // add enrollment with given userId, courseId and role
-    addEnroll(dto: addEnrollmentDto, headers: any){
+    addEnroll(dto: addEnrollmentDto){
         // verify userId
         if (this.userService.validId(dto.userId) !== true)
             throw new BadRequestException("Invalid userId!");
@@ -58,7 +58,7 @@ export class EnrollmentService {
                 throw new BadRequestException("Enrollment Existed!");
             }
         else{
-                // add new enrollment
+            // add new enrollment
             this.enrollments.push({
                 'id': this.enrollments.length,
                 'userId': Number(dto.userId),
@@ -71,7 +71,7 @@ export class EnrollmentService {
     }
 
     // delete enrollment with given id
-    deleteEnroll(id: number, headers: any){
+    deleteEnroll(id: number){
         // verify given id
         if (this.validId(id)){
             // delete the enrollment

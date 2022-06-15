@@ -1,31 +1,33 @@
 # NTUCool-Interview
 
 ## Preparation and Installation
+- install nest.js using `npm install -g @nestjs/cli`
 - install the required modules through `npm install`
 - run the Web API with `npm run start`
 - test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
 
 ## Directories & Files
-### User
-- contain module related to users
-- dto directory kept format for how the data sent over the network
+### User 
+- contain module, controller and service related to users
 
 ### Course
-- contain module related to courses
+- contain module, controller and service related to courses
 
 ### Enrollment
-- contain module related to enrollments
-- dto directory kept format for how the data sent over the network
-
-### Auth
-- contain functions related to authentication of admin 'cool'
+- contain module, controller and service related to enrollments
 
 ### Database
 - contain the initData for Restful API
 - contain the schema(type) for User, Course and Enrollment
 
+### Dto
+- dto directory kept format for how the data sent over the network
+
 ### Utility
-- contain helper functions to assist usage of Restful API
+- contain helper functions to assist response of Restful API
+
+### logger.middleware.ts
+- used to validate BearerAuthToken 
 
 ## Restful API
 ### User
@@ -38,19 +40,21 @@ graph LR
     B["/user"] --> H(/edit/:id) 
     B["/user"] --> I(/delete/:id) 
 
-    E["/create"]        --> J{UserController}
     F["/get/:id"]       --> J{UserController}
     G["/query"]         --> J{UserController}
-    H["/edit/:id"]      --> J{UserController}
-    I["/delete/:id"]    --> J{UserController}
+    E["/create"]        --> Z{Middleware}
+    H["/edit/:id"]      --> Z{Middleware}
+    I["/delete/:id"]    --> Z{Middleware}
 
+    Z{Middleware} --> J{UserController}
     J{UserController} --> K{UserService}
 
-    K{UserService} --> L("createUser()")
     K{UserService} --> M("getUser()")
     K{UserService} --> N("queryUser()")
+    K{UserService} --> L("createUser()")
     K{UserService} --> O("editUser()")
     K{UserService} --> P("deleteUser()")
+
 ```
 - **".../user/create"**
     - **ReqMethod: POST**
@@ -122,7 +126,7 @@ graph LR
         - In Header: {Authorization: Bearer {token} }
     - **response:**
         -  success
-            -  User with id ${id} deleted!
+            -  User with id {id} deleted!
         -  invalid id
             -  BadRequestException("Invalid id! User not exists!");
         -  invalid token
@@ -140,20 +144,22 @@ graph LR
     C["/enrollment"] --> O(/queryCourse)
 
     J(/queryUser)   --> P{EnrollmentController}
-    K(/add)         --> P{EnrollmentController}
-    L(/delete/:id)  --> P{EnrollmentController}
     M(/get/:id)     --> P{EnrollmentController}
     N(/queryEnroll) --> P{EnrollmentController}
     O(/queryCourse) --> P{EnrollmentController}
-
+    
+    K(/add) --> Z{Middleware}
+    L(delete/:id) --> Z{Middleware}
+    
+    Z{Middleware} --> P{EnrollmentController}
     P{EnrollmentController} --> R{EnrollmentService}
 
     R{EnrollmentService} --> S("queryCourseUser()")
-    R{EnrollmentService} --> T("addEnroll()")
-    R{EnrollmentService} --> U("deleteEnroll()")
     R{EnrollmentService} --> V("getEnroll()")
     R{EnrollmentService} --> W("queryEnroll()")
     R{EnrollmentService} --> X("queryUserCourse()")
+    R{EnrollmentService} --> T("addEnroll()")
+    R{EnrollmentService} --> U("deleteEnroll()")
 ```
 - **".../enrollment/queryUser?courseId={number}"**
     - **ReqMethod: GET**
@@ -258,19 +264,21 @@ graph LR
         - invalid id
             - BadRequestException("Invalid id! Course not exists!");
 
+## 
+
 ## Some Implementations
 - email must match regex \/^\S@\S$\/
     - using ValidationPipe to verify the format of email
     - @Matches('\^[\\S]+@[\\S]+$') 
     
 - return BadRequest 
-    - `throw new BadRequestException({msg});`
+    - `throw new BadRequestException({ErrMsg});`
 
 - Bearer Auth token Header, token = 'cool'
     - carry Bearer auth token in the header of html request 
-    - In Header: {Athorization: Bearer 'cool'}
+    - In Header: {Athorization: Bearer cool}
     - extract auth token by 
-        - `BearerToken = headers.authorization.split(' ');`
+        - `BearerToken = req.headers['authorization'].split(' ');`
         - should get `BearerToken[0] === 'Bearer' && BearerToken[1] === 'cool'`
 
 - return Unauthorized
