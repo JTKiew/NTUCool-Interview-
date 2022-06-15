@@ -1,5 +1,4 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
 import { CourseService } from 'src/course/course.service';
 import { Course, Enrollment, Users } from 'src/database';
 import { UserService } from 'src/user/user.service';
@@ -13,8 +12,6 @@ export class EnrollmentService {
     private readonly userService: UserService;
     @Inject(CourseService)
     private readonly courseService: CourseService;
-    @Inject(AuthService)
-    private readonly authService: AuthService;
 
     // local variable to save the enrollments data 
     private enrollments: Enrollment[] = [];
@@ -44,59 +41,49 @@ export class EnrollmentService {
 
     // add enrollment with given userId, courseId and role
     addEnroll(dto: addEnrollmentDto, headers: any){
-        // verify Bearer token in Header.Authorization
-        if (this.authService.authToken(headers)){
-            // verify userId
-            if (this.userService.validId(dto.userId) !== true)
-                throw new BadRequestException("Invalid userId!");
-            // verify courseId
-            if (this.courseService.validId(dto.courseId) !== true)
-                throw new BadRequestException("Invalid courseId!");
-            // verify role
-            if (dto.role.localeCompare('student') !== 0 && dto.role.localeCompare('teacher') !== 0)
-                throw new BadRequestException("Invalid role!");
-            // searching for duplicate entry
-            if (this.enrollments.some(obj => 
-                obj.userId == dto.userId && 
-                obj.courseId == dto.courseId &&
-                obj.role == dto.role) == true){
-                    throw new BadRequestException("Enrollment Existed!");
-                }
-            else{
-                  // add new enrollment
-                this.enrollments.push({
-                    'id': this.enrollments.length,
-                    'userId': Number(dto.userId),
-                    'courseId': Number(dto.courseId),
-                    'role': dto.role
-                })
-                console.log(this.enrollments);
-                return `New Enrollment added!`;
+        // verify userId
+        if (this.userService.validId(dto.userId) !== true)
+            throw new BadRequestException("Invalid userId!");
+        // verify courseId
+        if (this.courseService.validId(dto.courseId) !== true)
+            throw new BadRequestException("Invalid courseId!");
+        // verify role
+        if (dto.role.localeCompare('student') !== 0 && dto.role.localeCompare('teacher') !== 0)
+            throw new BadRequestException("Invalid role!");
+        // searching for duplicate entry
+        if (this.enrollments.some(obj => 
+            obj.userId == dto.userId && 
+            obj.courseId == dto.courseId &&
+            obj.role == dto.role) == true){
+                throw new BadRequestException("Enrollment Existed!");
             }
+        else{
+                // add new enrollment
+            this.enrollments.push({
+                'id': this.enrollments.length,
+                'userId': Number(dto.userId),
+                'courseId': Number(dto.courseId),
+                'role': dto.role
+            })
+            console.log(this.enrollments);
+            return `New Enrollment added!`;
         }
-        else
-            throw new UnauthorizedException();
     }
 
     // delete enrollment with given id
     deleteEnroll(id: number, headers: any){
-        // verify Bearer token in Header.Authorization
-        if (this.authService.authToken(headers)){
-            // verify given id
-            if (this.validId(id)){
-                // delete the enrollment
-                this.enrollments.splice(id,1)
-                // update remaining enrollments's id
-                this.enrollments = enrollSorting(this.enrollments);
-                console.log(this.enrollments);
-                return `Enrollment with id ${id} deleted!`
-            }
-            else {
-                throw new BadRequestException("Invalid id! Enrollment not exists!");
-            }
+        // verify given id
+        if (this.validId(id)){
+            // delete the enrollment
+            this.enrollments.splice(id,1)
+            // update remaining enrollments's id
+            this.enrollments = enrollSorting(this.enrollments);
+            console.log(this.enrollments);
+            return `Enrollment with id ${id} deleted!`
         }
-        else
-            throw new UnauthorizedException();
+        else {
+            throw new BadRequestException("Invalid id! Enrollment not exists!");
+        }
     }
 
     // get enrollment date with given id
