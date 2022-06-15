@@ -48,6 +48,7 @@ graph LR
     K{UserService} --> P("deleteUser()")
 ```
 - **".../user/create"**
+    - **ReqMethod: POST**
     - **create new user**
     - **requirement:** 
         -  In Header: {Authorization: Bearer {token} }
@@ -63,6 +64,7 @@ graph LR
             - UnauthorizedException();
             
 - **".../user/get/:id"**
+    - **ReqMethod: GET**
     - **get user data by id**
     - **requirement:**
         - id should replace with valid target user's id 
@@ -73,6 +75,7 @@ graph LR
             - BadRequestException("Invalid id! User not exists!");
             
 - **".../user/query?filter={string}&str={string}"**
+    - **ReqMethod: GET**
     - **query user by name/email**
     - **use filter to specified content of str (name / email), str contain query parameter**
     - **requirement:**
@@ -89,6 +92,7 @@ graph LR
             - BadRequestException("Invalid email! User not exists!");
             
 - **".../user/edit/:id"**
+    - **ReqMethod: PUT**
     - **edit user name and email by id**
     - **content in name or email can be blank => no changes**
     - **requirement:**
@@ -106,6 +110,7 @@ graph LR
             -  BadRequestException("str must match "\^[\\S]+@[\\S]+$" regular expression")
             
 - **".../user/delete/:id"**
+    - **ReqMethod: DELETE**
     - **delete user by id**
     - **requirement:**
         - id should replace with valid target user's id 
@@ -146,6 +151,7 @@ graph LR
     R{EnrollmentService} --> X("queryUserCourse()")
 ```
 - **".../enrollment/queryUser?courseId={number}"**
+    - **ReqMethod: GET**
     - **query user data by courseId**
     - **requirement:**
         - In Query: { "courseId": {number} }
@@ -156,6 +162,7 @@ graph LR
             - BadRequestException("Invalid id! Course not exists!")
 
 - **".../enrollment/add"**
+    - **ReqMethod: POST**
     - **add enrollment with given userId, courseId and role**
     - **requirement:**
         - In Header: {Authorization: Bearer {token} }
@@ -175,6 +182,7 @@ graph LR
             - UnauthorizedException()
 
 - **".../enrollment/delete/:id"**
+    - **ReqMethod: DELETE**
     - **delete enrollment by id**
     - **requirement:**
         - :id must replace by the id of target enrollment
@@ -188,6 +196,7 @@ graph LR
             - UnauthorizedException();
 
 - **".../enrollment/get/:id"**
+    - **ReqMethod: GET**
     - **get enrollment data by id**
     - **requirement:**
         - :id must replace by the id of target enrollment
@@ -198,6 +207,7 @@ graph LR
             - BadRequestException("Invalid id! Enrollment not exists!");
 
 - **".../enrollment/queryEnroll?userId={number}&courseId={number}&role={string}"**
+    - **ReqMethod: GET**
     - **query enrollment by userId, courseId or role**
     - **content in userId, courseId or role can be blank => not used as query parameter**
     - **requirement:**
@@ -213,6 +223,7 @@ graph LR
             - BadRequestException("Invalid role!");
 
 - **".../enrollment/queryCourse?userId={number}"**
+    - **ReqMethod: GET**
     - **query course data by userId**
     - **requirement:**
         - In Query: { "userId": {number} }
@@ -232,6 +243,7 @@ graph LR
     R{CourseService} --> S("getCourse()")
 ```
 - **".../course/get/:id"**
+    - **ReqMethod: GET**
     - **get course data by id**
     - **requirement:**
         - id should replace with valid target course's id 
