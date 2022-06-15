@@ -1,7 +1,7 @@
 # NTUCool-Interview
 
 ## Preparation and Installation
-- install nest.js using `npm install -g @nestjs/cli`
+- install nest.js cli using `npm install -g @nestjs/cli`
 - install the required modules through `npm install`
 - run the Web API with `npm run start`
 - test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
