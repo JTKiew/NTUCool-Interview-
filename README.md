@@ -6,7 +6,7 @@
 - test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
 
 ## Directories & Files
-### User
+### User 
 - contain module related to users
 - dto directory kept format for how the data sent over the network
 
@@ -17,15 +17,15 @@
 - contain module related to enrollments
 - dto directory kept format for how the data sent over the network
 
-### Auth
-- contain functions related to authentication of admin 'cool'
-
 ### Database
 - contain the initData for Restful API
 - contain the schema(type) for User, Course and Enrollment
 
 ### Utility
 - contain helper functions to assist usage of Restful API
+
+### logger.middleware
+- used to validate BearerAuthToken 
 
 ## Restful API
 ### User
@@ -264,13 +264,13 @@ graph LR
     - @Matches('\^[\\S]+@[\\S]+$') 
     
 - return BadRequest 
-    - `throw new BadRequestException({msg});`
+    - `throw new BadRequestException({ErrMsg});`
 
 - Bearer Auth token Header, token = 'cool'
     - carry Bearer auth token in the header of html request 
     - In Header: {Athorization: Bearer 'cool'}
     - extract auth token by 
-        - `BearerToken = headers.authorization.split(' ');`
+        - `BearerToken = req.headers['authorization'].split(' ');`
         - should get `BearerToken[0] === 'Bearer' && BearerToken[1] === 'cool'`
 
 - return Unauthorized
