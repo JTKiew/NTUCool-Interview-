@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { addEnrollmentDto, queryEnrollCourseDto, queryEnrollmentDto, queryEnrollUserDto} from 'src/dto';
 import { EnrollmentService } from './enrollment.service';
 
+@ApiTags('Enrollment')
 @Controller('enrollment')
 export class EnrollmentController {
     constructor( private enrollService: EnrollmentService) {}
@@ -17,6 +19,7 @@ export class EnrollmentController {
     // url: localhost:3000/enrollment/add
     // submited userId, courseId and role carry by HTML Req Body
     // BearerAuthToken should added in Header.Authorization 
+    @ApiBearerAuth()
     @Post('add')
     addEnrollment(@Body() dto: addEnrollmentDto){
         return this.enrollService.addEnroll(dto);
@@ -26,6 +29,7 @@ export class EnrollmentController {
     // url: localhost:3000/enrollment/delete/:id
     // :id must replace by the id of target enrollment
     // BearerAuthToken should added in Header.Authorization 
+    @ApiBearerAuth()
     @Delete('delete/:id')
     deleteEnrollment(@Param('id', ParseIntPipe) id: number){
         return this.enrollService.deleteEnroll(id);
@@ -53,11 +57,4 @@ export class EnrollmentController {
     queryUserCourse(@Query() dto: queryEnrollCourseDto ){
         return this.enrollService.queryUserCourse(Number(dto.userId));
     }
-
-
- 
-
-
-
-
 }
