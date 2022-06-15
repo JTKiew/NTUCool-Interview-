@@ -4,8 +4,6 @@ import { NextFunction, Request, Response } from "express";
 @Injectable()
 export class BearerTokenCheckMiddleware implements NestMiddleware{
     use(req: Request, res: Response, next: NextFunction) {
-        console.log("middleware")
-        console.log(req.headers['authorization'])
         // check if header carry valid authorization token
         if (req.headers.hasOwnProperty('authorization')){
             // extract the Bearer token from header 

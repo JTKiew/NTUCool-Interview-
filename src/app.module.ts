@@ -16,7 +16,7 @@ export class AppModule implements NestModule{
       consumer  
         .apply(BearerTokenCheckMiddleware)
         .forRoutes(
-          // add middleware to path that require Bearer Auth token validation
+          // add middleware to route path that require Bearer Auth token validation
           {path: 'user/create', method: RequestMethod.POST},
           {path: 'user/edit/*', method: RequestMethod.PUT},
           {path: 'user/delete/*', method: RequestMethod.DELETE},

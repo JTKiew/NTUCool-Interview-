@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { createUserDto, editUserDto, queryUserDto } from 'src/dto';
 import { UserService } from './user.service';
-import { createUserDto, editUserDto, queryUserDto } from './dto';
  
 @Controller('user')
 export class UserController {
@@ -9,11 +9,10 @@ export class UserController {
     // create new user
     // url: localhost:3000/user/create
     // submited name and email carry by HTML Req Body
+    // BearerAuthToken should added in Header.Authorization 
     @Post('create')
-    createUser(
-        @Body() dto: createUserDto,
-        @Headers() headers:{}){
-        return this.userService.createUser(dto, headers);
+    createUser(@Body() dto: createUserDto){
+        return this.userService.createUser(dto);
     };
 
     // get user data by id
@@ -38,21 +37,20 @@ export class UserController {
     // :id must replace by the id of target user 
     // edit data (name / email) carry by HTML Req Body
     // content in name or email can be blank => no changes
+    // BearerAuthToken should added in Header.Authorization 
     @Put('edit/:id')
     edituser(
-        @Headers() headers: {},
         @Param('id', ParseIntPipe) id: number, 
         @Body() dto: editUserDto){
-        return this.userService.editUser(id, dto, headers);
+        return this.userService.editUser(id, dto);
     }
 
     // delete user by id
     // url: localhost:3000/user/edit/:id
     // :id must replace by the id of target user 
+    // BearerAuthToken should added in Header.Authorization 
     @Delete('delete/:id')
-    deleteUser(
-        @Headers() headers: {},
-        @Param('id', ParseIntPipe) id: number){
-        return this.userService.deleteUser(id,headers);
+    deleteUser(@Param('id', ParseIntPipe) id: number){
+        return this.userService.deleteUser(id);
     }
 }

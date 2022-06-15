@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator'
 
-export class queryCourseDto {
+export class queryEnrollCourseDto {
     @IsNotEmpty()   // ensure userId not empty string
     userId: number
 }

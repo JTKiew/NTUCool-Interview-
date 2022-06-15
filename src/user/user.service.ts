@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { userData, Users } from 'src/database';
+import { createUserDto, editUserDto, queryUserDto } from 'src/dto';
 import { userSorting } from 'src/Utility/Sorting';
-import { createUserDto, editUserDto, queryUserDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -9,7 +9,7 @@ export class UserService {
     private users: Users[] = userData;
 
     // receive the name and email to create new user
-    createUser(dto: createUserDto, headers: {}){
+    createUser(dto: createUserDto){
         // search the users for duplicates name or email
         let exist = this.users.find((obj) => {
             return obj.name === dto.name || obj.email === dto.email;
@@ -65,7 +65,7 @@ export class UserService {
     }
 
     // edit user's name or email 
-    editUser(id: number, dto: editUserDto, headers: {}){
+    editUser(id: number, dto: editUserDto){
         // verify given id
         if (this.validId(id)){
             // not blank means have changing towards name or email
@@ -84,7 +84,7 @@ export class UserService {
     }
 
     // delete user with given id
-    deleteUser(id: number, headers: any){
+    deleteUser(id: number){
         // verify given id
         if (this.validId(id)){
             // delete the user

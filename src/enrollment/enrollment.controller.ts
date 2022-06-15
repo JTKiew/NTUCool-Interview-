@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { addEnrollmentDto, queryCourseDto, queryEnrollmentDto, queryUserDto } from './dto';
+import { addEnrollmentDto, queryEnrollCourseDto, queryEnrollmentDto, queryEnrollUserDto} from 'src/dto';
 import { EnrollmentService } from './enrollment.service';
 
 @Controller('enrollment')
@@ -9,28 +9,26 @@ export class EnrollmentController {
     // query user data by courseId
     // url: localhost:3000/enrollment/queryUser?courseId=
     @Get('queryUser')
-    queryCourseUser(@Query() dto: queryUserDto){
+    queryCourseUser(@Query() dto: queryEnrollUserDto){
         return this.enrollService.queryCourseUser(Number(dto.courseId));
     }
 
     // add new enrollment with given userId, courseid and role
     // url: localhost:3000/enrollment/add
     // submited userId, courseId and role carry by HTML Req Body
+    // BearerAuthToken should added in Header.Authorization 
     @Post('add')
-    addEnrollment(
-        @Headers() headers: {},
-        @Body() dto: addEnrollmentDto){
-        return this.enrollService.addEnroll(dto, headers);
+    addEnrollment(@Body() dto: addEnrollmentDto){
+        return this.enrollService.addEnroll(dto);
     }
 
     // delete enrollment by id
     // url: localhost:3000/enrollment/delete/:id
     // :id must replace by the id of target enrollment
+    // BearerAuthToken should added in Header.Authorization 
     @Delete('delete/:id')
-    deleteEnrollment(
-        @Headers() headers: {},
-        @Param('id', ParseIntPipe) id: number){
-        return this.enrollService.deleteEnroll(id,headers);
+    deleteEnrollment(@Param('id', ParseIntPipe) id: number){
+        return this.enrollService.deleteEnroll(id);
     }
 
     // get enrollment data by id
@@ -52,7 +50,7 @@ export class EnrollmentController {
     // query course data by userId
     // url: localhost:3000/enrollment/queryCourrse?userId=
     @Get('queryCourse')
-    queryUserCourse(@Query() dto: queryCourseDto ){
+    queryUserCourse(@Query() dto: queryEnrollCourseDto ){
         return this.enrollService.queryUserCourse(Number(dto.userId));
     }
 
