@@ -1,5 +1,4 @@
-import { IsOptional, ValidateIf } from 'class-validator'
-import { Transform } from 'class-transformer'
+import { IsOptional } from 'class-validator'
 
 export class queryEnrollmentDto {
     @IsOptional()   // optional parameter

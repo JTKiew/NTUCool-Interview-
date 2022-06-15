@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { IsNotEmpty } from 'class-validator';
+import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { addEnrollmentDto, queryCourseDto, queryEnrollmentDto, queryUserDto } from './dto';
 import { EnrollmentService } from './enrollment.service';
 
