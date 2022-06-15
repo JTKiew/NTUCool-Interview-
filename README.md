@@ -44,7 +44,7 @@ graph LR
     K{UserService} --> L("createUser()")
     K{UserService} --> M("getUser()")
     K{UserService} --> N("queryUser()")
-    K{UserService} --> O("editUser")
+    K{UserService} --> O("editUser()")
     K{UserService} --> P("deleteUser()")
 ```
 - **".../user/create"**
