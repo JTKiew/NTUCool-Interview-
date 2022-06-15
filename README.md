@@ -276,7 +276,7 @@ graph LR
 
 - Bearer Auth token Header, token = 'cool'
     - carry Bearer auth token in the header of html request 
-    - In Header: {Athorization: Bearer 'cool'}
+    - In Header: {Athorization: Bearer cool}
     - extract auth token by 
         - `BearerToken = req.headers['authorization'].split(' ');`
         - should get `BearerToken[0] === 'Bearer' && BearerToken[1] === 'cool'`
