@@ -1,5 +1,10 @@
 # NTUCool-Interview
 
+## Preparation and Installation
+- install the required modules through `npm install`
+- run the Web API with `npm run start`
+- test the Web API through API tester like Postman(https://www.postman.com/), Insomnia(https://insomnia.rest/) 
+
 ## Directories & Files
 ### User
 - contain module related to users
