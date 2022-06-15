@@ -1,7 +1,10 @@
 import { Body, Controller, Delete, Get, Headers, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { addEnrollmentDto, queryEnrollCourseDto, queryEnrollmentDto, queryEnrollUserDto} from 'src/dto';
 import { EnrollmentService } from './enrollment.service';
 
+@ApiBearerAuth()
+@ApiTags('Enrollment')
 @Controller('enrollment')
 export class EnrollmentController {
     constructor( private enrollService: EnrollmentService) {}
@@ -53,11 +56,4 @@ export class EnrollmentController {
     queryUserCourse(@Query() dto: queryEnrollCourseDto ){
         return this.enrollService.queryUserCourse(Number(dto.userId));
     }
-
-
- 
-
-
-
-
 }
