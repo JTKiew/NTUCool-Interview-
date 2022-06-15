@@ -3,7 +3,6 @@ import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { createUserDto, editUserDto, queryUserDto } from 'src/dto';
 import { UserService } from './user.service';
  
-@ApiBearerAuth()
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -13,6 +12,7 @@ export class UserController {
     // url: localhost:3000/user/create
     // submited name and email carry by HTML Req Body
     // BearerAuthToken should added in Header.Authorization 
+    @ApiBearerAuth()
     @Post('create')
     createUser(@Body() dto: createUserDto){
         return this.userService.createUser(dto);
@@ -41,6 +41,7 @@ export class UserController {
     // edit data (name / email) carry by HTML Req Body
     // content in name or email can be blank => no changes
     // BearerAuthToken should added in Header.Authorization 
+    @ApiBearerAuth()
     @Put('edit/:id')
     edituser(
         @Param('id', ParseIntPipe) id: number, 
@@ -52,6 +53,7 @@ export class UserController {
     // url: localhost:3000/user/edit/:id
     // :id must replace by the id of target user 
     // BearerAuthToken should added in Header.Authorization 
+    @ApiBearerAuth()
     @Delete('delete/:id')
     deleteUser(@Param('id', ParseIntPipe) id: number){
         return this.userService.deleteUser(id);
