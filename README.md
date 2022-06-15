@@ -129,12 +129,12 @@ graph LR
     C["/enrollment"] --> N(/queryEnroll)
     C["/enrollment"] --> O(/queryCourse)
 
-    J(/queryUser)	--> P{EnrollmentController}
-    K(/add)			--> P{EnrollmentController}
-    L(/delete/:id)	--> P{EnrollmentController}
-    M(/get/:id)		--> P{EnrollmentController}
-    N(/queryEnroll)	--> P{EnrollmentController}
-    O(/queryCourse)	--> P{EnrollmentController}
+    J(/queryUser)   --> P{EnrollmentController}
+    K(/add)         --> P{EnrollmentController}
+    L(/delete/:id)  --> P{EnrollmentController}
+    M(/get/:id)     --> P{EnrollmentController}
+    N(/queryEnroll) --> P{EnrollmentController}
+    O(/queryCourse) --> P{EnrollmentController}
 
     P{EnrollmentController} --> R{EnrollmentService}
 
@@ -240,3 +240,21 @@ graph LR
             - course's data
         - invalid id
             - BadRequestException("Invalid id! Course not exists!");
+
+## Some Implementations
+- email must match regex \/^\S@\S$\/
+    - using ValidationPipe to verify the format of email
+    - @Matches('\^[\\S]+@[\\S]+$') 
+    
+- return BadRequest 
+    - `throw new BadRequestException({msg});`
+
+- Bearer Auth token Header, token = 'cool'
+    - carry Bearer auth token in the header of html request 
+    - In Header: {Athorization: Bearer 'cool'}
+    - extract auth token by 
+        - `BearerToken = headers.authorization.split(' ');`
+        - should get `BearerToken[0] === 'Bearer' && BearerToken[1] === 'cool'`
+
+- return Unauthorized
+    -  `throw new UnauthorizedException();`
