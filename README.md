@@ -32,6 +32,7 @@
 ## Restful API
 - Following are documents of input and response of APIs
 - go to `localhost:3000/api` for more visualized API provided by Swagger
+- to test enrollment API, please use .../enrollment/add to create enrollment entry first
 ### User
 ```mermaid
 graph LR
