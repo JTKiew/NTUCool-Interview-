@@ -17,7 +17,7 @@ export class EnrollmentController {
 
     // add new enrollment with given userId, courseid and role
     // url: localhost:3000/enrollment/add
-    // submited userId, courseId and role carry by HTML Req Body
+    // submited userId, courseId and role carry by HTTP Req Body
     // BearerAuthToken should added in Header.Authorization 
     @ApiBearerAuth()
     @Post('add')

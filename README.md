@@ -278,7 +278,7 @@ graph LR
     - `throw new BadRequestException({ErrMsg});`
 
 - Bearer Auth token Header, token = 'cool'
-    - carry Bearer auth token in the header of html request 
+    - carry Bearer auth token in the header of http request 
     - In Header: {Athorization: Bearer cool}
     - extract auth token by 
         - `BearerToken = req.headers['authorization'].split(' ');`
