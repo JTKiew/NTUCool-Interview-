@@ -152,7 +152,7 @@ graph LR
     O(/queryCourse) --> P{EnrollmentController}
     
     K(/add) --> Z{Middleware}
-    L(delete/:id) --> Z{Middleware}
+    L(/delete/:id) --> Z{Middleware}
     
     Z{Middleware} --> P{EnrollmentController}
     P{EnrollmentController} --> R{EnrollmentService}
