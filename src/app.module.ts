@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { CourseModule } from './course/course.module';
 import { EnrollmentModule } from './enrollment/enrollment.module';
-import { BearerTokenCheckMiddleware } from './logger.middleware';
+import { BearerTokenCheckMiddleware } from './BearerAuth.middleware';
 
 @Module({
   imports: [UserModule, CourseModule, EnrollmentModule],
